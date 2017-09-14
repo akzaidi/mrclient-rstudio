@@ -22,7 +22,8 @@ RUN apt-get update \
         libssl-dev \
         gfortran \
         build-essential \
-	libxml2-dev
+	libxml2-dev \
+	tzdata
 
 RUN wget https://s3.amazonaws.com/rstudio-dailybuilds/rstudio-server-1.1.246-amd64.deb
 RUN gdebi -nq rstudio-server-1.1.246-amd64.deb
