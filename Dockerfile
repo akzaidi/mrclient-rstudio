@@ -39,11 +39,9 @@ RUN set -e \
       && echo rstudio:rstudio \
         | chpasswd
 
-
 # download tutorial
 
 WORKDIR /home/rstudio
-RUN chown -R rstudio:rstudio /home/rstudio/
 RUN git clone https://github.com/Azure/learnAnalytics-MicrosoftML
 
 # Copy EULAs
@@ -51,6 +49,8 @@ RUN git clone https://github.com/Azure/learnAnalytics-MicrosoftML
 COPY EULA.txt MRC_EULA.txt
 COPY MKL_EULA.txt MKL_EULA.txt
 COPY MRO_EULA.txt MRO_EULA.txt
+
+RUN chown -R rstudio:rstudio /home/rstudio/
 
 LABEL org.label-schema.license="https://mran.microsoft.com/faq/#licensing" \
     org.label-schema.vendor="Microsoft Corporation, Dockerfile provided by Ali Zaidi" \
