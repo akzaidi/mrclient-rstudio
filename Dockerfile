@@ -45,6 +45,12 @@ RUN set -e \
 WORKDIR /home/rstudio
 RUN git clone https://github.com/Azure/learnAnalytics-MicrosoftML
 
+# Copy EULAs
+
+COPY EULA.txt MRC_EULA.txt
+COPY MKL_EULA.txt MKL_EULA.txt
+COPY MRO_EULA.txt MRO_EULA.txt
+
 LABEL org.label-schema.license="https://mran.microsoft.com/faq/#licensing" \
     org.label-schema.vendor="Microsoft Corporation, Dockerfile provided by Ali Zaidi" \
     org.label-schema.name="Microsoft R Client" \
