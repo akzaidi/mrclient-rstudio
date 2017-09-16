@@ -43,6 +43,7 @@ RUN set -e \
 # download tutorial
 
 WORKDIR /home/rstudio
+RUN chown -R rstudio:rstudio /home/rstudio/
 RUN git clone https://github.com/Azure/learnAnalytics-MicrosoftML
 
 # Copy EULAs
