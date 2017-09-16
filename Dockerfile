@@ -22,33 +22,38 @@ RUN apt-get update \
         libssl-dev \
         gfortran \
         build-essential \
-	libxml2-dev \
-	tzdata
+        libxml2-dev \
+        tzdata \
+        git
 
-RUN wget https://s3.amazonaws.com/rstudio-dailybuilds/rstudio-server-1.1.246-amd64.deb
-RUN gdebi -nq rstudio-server-1.1.246-amd64.deb
-RUN rm rstudio-server-1.1.246-amd64.deb
+RUN wget https://raw.githubusercontent.com/akzaidi/etc/master/inst/install-rstudio-ubuntu.sh
+RUN chmod +x ./install-rstudio-ubuntu.sh && bash ./install-rstudio-ubuntu.sh 1.1.365
+RUN rm ./install-rstudio-ubuntu.sh *.deb
 
-# startup scripts
 EXPOSE 8787
 
-LABEL org.label-schema.license="https://mran.microsoft.com/faq/#licensing" \
-    org.label-schema.vendor="Microsoft Corporation, Dockerfile provided by Ali Zaidi" \
-	org.label-schema.name="Microsoft R Client" \
-	org.label-schema.description="Docker images of Microsoft R Client (R Client) with the Intel® Math Kernel Libraries (MKL)." \ 
-	org.label-schema.vcs-url=$VCS_URL \
-	org.label-schema.vcs-ref=$VCS_REF \
-	org.label-schema.build-date=$BUILD_DATE \
-	org.label-schema.schema-version="rc1" \
-	maintainer="Ali Zaidi <alizaidi@microsoft.com>"
+# create rstudio user
 
-
-# start rstudio server
 RUN set -e \
       && useradd -m -d /home/rstudio rstudio \
       && echo rstudio:rstudio \
         | chpasswd
 
-EXPOSE 8787
+
+# download tutorial
+
+WORKDIR /home/rstudio
+RUN git clone https://github.com/Azure/learnAnalytics-MicrosoftML
+
+LABEL org.label-schema.license="https://mran.microsoft.com/faq/#licensing" \
+    org.label-schema.vendor="Microsoft Corporation, Dockerfile provided by Ali Zaidi" \
+    org.label-schema.name="Microsoft R Client" \
+    org.label-schema.description="Docker images of Microsoft R Client (R Client) with the Intel® Math Kernel Libraries (MKL)." \ 
+    org.label-schema.vcs-url=$VCS_URL \
+    org.label-schema.vcs-ref=$VCS_REF \
+    org.label-schema.build-date=$BUILD_DATE \
+    org.label-schema.schema-version="rc1" \
+    maintainer="Ali Zaidi <alizaidi@microsoft.com>"
+
 
 CMD ["/usr/lib/rstudio-server/bin/rserver", "--server-daemonize=0", "--server-app-armor-enabled=0"]
