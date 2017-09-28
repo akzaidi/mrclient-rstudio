@@ -1,4 +1,4 @@
-FROM akzaidi/mrclient-docker
+FROM akzaidi/mrclient-docker:latest
 
 MAINTAINER Ali Zaidi <alikaz.zaidi@gmail.com>
 
