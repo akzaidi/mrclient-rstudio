@@ -52,6 +52,9 @@ COPY MRO_EULA.txt MRO_EULA.txt
 
 RUN chown -R rstudio:rstudio /home/rstudio/
 
+# set rclient to rsession for rstudio-server
+RUN echo "rsession-which-r=/opt/microsoft/rclient/3.4.1/bin/R/R" >> /etc/rstudio/rserver.conf
+
 LABEL org.label-schema.license="https://mran.microsoft.com/faq/#licensing" \
     org.label-schema.vendor="Microsoft Corporation, Dockerfile provided by Ali Zaidi" \
     org.label-schema.name="Microsoft R Client" \
