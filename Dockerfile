@@ -26,9 +26,9 @@ RUN apt-get update \
         tzdata \
         git
 
-RUN wget https://raw.githubusercontent.com/akzaidi/etc/master/inst/install-rstudio-ubuntu.sh
-RUN chmod +x ./install-rstudio-ubuntu.sh && bash ./install-rstudio-ubuntu.sh 1.1.365
-RUN rm ./install-rstudio-ubuntu.sh
+RUN wget https://raw.githubusercontent.com/akzaidi/etc/master/inst/install-rstudio-ubuntu.sh \
+	&& chmod +x ./install-rstudio-ubuntu.sh && bash ./install-rstudio-ubuntu.sh 1.2.377 \ 
+	&& rm ./install-rstudio-ubuntu.sh
 
 EXPOSE 8787
 
